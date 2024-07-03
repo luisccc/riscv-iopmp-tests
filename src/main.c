@@ -41,8 +41,8 @@ bool check_misa_h(){
 }
 
 void main(){
-
-    INFO("RISC-V Input/Output Memory Management Unit Tests");
+    
+    INFO("RISC-V Input/Output Physical Memory Protection Tests");
 
     // Reset CPU
     reset_state();
@@ -53,6 +53,5 @@ void main(){
     for(int i = 0; i < test_table_size; i++)
         test_table[i]();
 
-    INFO("end");
-    exit(0);
+    END();
 }

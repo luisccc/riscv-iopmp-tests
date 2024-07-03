@@ -4,9 +4,10 @@
 #include "iopmp_tests.h"
 
 #define MODE_OFF        (0ULL)
-#define MODE_TOR        (1ULL)
-#define MODE_NA4        (2ULL)
-#define MODE_NAPOT      (3ULL)
+#define MODE_TOR        (1ULL << 3)
+#define MODE_NA         (2ULL << 3)
+#define MODE_NA4        (2ULL << 3)
+#define MODE_NAPOT      (3ULL << 3)
 
 #define ACCESS_NONE     (0ULL)
 #define ACCESS_READ     (1ULL)
@@ -51,15 +52,24 @@
 #define REQ_ID_EID(value)           ((value >> 16) & 0xffff)
 
 void enable_iopmp();
-void entry_config(uint64_t addr, uint8_t mode, uint8_t access, uint8_t entry_num);
-void set_entry_napot(uint64_t base_addr, uint64_t length, uint8_t access, uint8_t entry_num);
-void set_entry_tor(uint64_t base_addr, uint8_t access, uint8_t entry_num);
-void set_entry_off(uint64_t base_addr, uint8_t access, uint8_t entry_num);
+int iopmp_entry_set(unsigned int n, unsigned long prot, unsigned long addr,
+	    unsigned long log2len);
+void iopmp_mdcfg_config(unsigned int n, unsigned int t);
+void iopmp_srcmd_config(unsigned int n, uint64_t mds_bmap, uint8_t lock);
+void entry_config(uint64_t addr, uint8_t mode, uint8_t access, uint16_t entry_num);
+void set_entry_napot(uint64_t base_addr, uint64_t length, uint8_t access, uint16_t entry_num);
+void set_entry_tor(uint64_t base_addr, uint8_t access, uint16_t entry_num);
+void set_entry_off(uint64_t base_addr, uint8_t access, uint16_t entry_num);
+void srcmd_entry_config(uint16_t* mds, uint8_t number_mds, uint8_t lock, uint8_t entry_num);
+void mdcfg_entry_config(uint16_t t, uint8_t entry_num);
 void clean_all_entries();
+
+int entry_set(unsigned int n, unsigned long prot, unsigned long addr,
+	    unsigned long log2len);
 
 void clean_error_reg();
 uint32_t read_error_reqinfo();
 uint32_t read_error_reqid();
-uint32_t read_error_reqaddr();
+uint64_t read_error_reqaddr();
 
 #endif  /* _RV_IOPMP_H_ */

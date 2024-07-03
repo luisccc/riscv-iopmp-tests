@@ -15,6 +15,9 @@ endif
 
 build_dir:=build/$(PLAT)
 plat_dir:=platform/$(PLAT)
+asm_dir:=src/asm
+TARGET := $(build_dir)/rv_iopmp_test
+
 ifeq ($(wildcard $(plat_dir)),)
 $(error unsupported platform $(PLAT))
 else
@@ -30,18 +33,23 @@ ifneq ($(PREV_LOG_LEVEL), $(LOG_LEVEL))
 pre_targets += clean_objs
 endif
 
-TARGET := $(build_dir)/rv_iopmp_test
-c_srcs := main.c rvh_test.c \
-	iopmp_tests.c test_register.c \
-	rv_iopmp.c idma.c \
-	$(addprefix $(plat_dir)/, $(notdir $(wildcard $(plat_dir)/*.c)))
-asm_srcs := boot.S handlers.S  $(wildcard $(plat_dir)/*.S)
+# Include all architecture-related C source files
+c_srcs = $(wildcard src/*.c)
+# Include all platform-related C source files
+c_srcs += $(wildcard $(plat_dir)/*.c)
+
+# Include all architecture-related assembly source files
+asm_srcs := $(wildcard $(asm_dir)/*.S) $(wildcard $(plat_dir)/*.S)
+# Include all platform-related assembly source files
+asm_srcs += $(wildcard $(plat_dir)/*.S)
+
 ld_file:=linker.ld
-inc_dirs := ./inc $(plat_dir)/inc
+
+inc_dirs := ./src/inc $(plat_dir)/inc
 inc_dirs := $(addprefix -I, $(inc_dirs))
 
 objs:=
-objs+=$(patsubst  %.c, $(build_dir)/%.o, $(c_srcs))
+objs+=$(patsubst  %.c, $(build_dir)/%.o, $(c_srcs) -lm)
 objs+=$(patsubst  %.S, $(build_dir)/%.o, $(asm_srcs))
 ld_file_final:=$(build_dir)/$(ld_file)
 
