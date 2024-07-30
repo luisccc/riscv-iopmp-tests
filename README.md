@@ -36,9 +36,9 @@ The Table below lists the included tests. Each one addresses one or more archite
 ## Configuring the Tests
 Before building the application, you must configure some parameters according to the properties of your platform.
 
-- In the [iopmp_tests.h](./inc/iopmp_tests.h) file, you can configure some IOPMP-related information. For example, **NUMBER_MASTERS** and **NUMBER_ENTRIES** define the range of entries and masters that will be used to execute the tests. You must configure these values according to the configurations in the actual IP or desired tests.
+- In the [iopmp_tests.h](./src/inc/iopmp_tests.h) file, you can configure some IOPMP-related information. For example, **NUMBER_MASTERS** and **NUMBER_ENTRIES** define the range of entries and masters that will be used to execute the tests. You must configure these values according to the configurations in the actual IP or desired tests.
 
-- You can disable/enable individual tests by commenting/uncommenting the corresponding line in the [test_register.c](./test_register.c) file.
+- You can disable/enable individual tests by commenting/uncommenting the corresponding line in the [test_register.c](./src/test_register.c) file.
 
 - The base address of the programming interfaces of the IOPMP IP and the iDMA devices must be specified in **platform/`${PLAT}`/inc/platform.h** and **platform/`${PLAT}`/plat_dma.c**
 
