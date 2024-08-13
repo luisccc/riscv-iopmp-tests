@@ -14,5 +14,5 @@ uint64_t idma_ids[N_DMA] = {
  *  We assume that DMA devices may not be contigous in memory
  */
 uint64_t idma_addr[N_DMA] = {
-    0x50000000ULL
+    0x50020000ULL
 };

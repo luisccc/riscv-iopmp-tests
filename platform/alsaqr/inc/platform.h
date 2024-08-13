@@ -5,6 +5,6 @@
 #define MEM_SIZE    (0x10000000)
 
 // Base address of the IOPMP Programming Interface
-#define IOPMP_BASE_ADDR            0x50020000ULL
+#define IOPMP_BASE_ADDR            0x50030000ULL
 
 #endif
