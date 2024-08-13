@@ -159,7 +159,7 @@ uint32_t read_error_reqid()
 
 uint64_t read_error_reqaddr()
 {
-    uint64_t result = read32(err_reqaddrh_addr) << 32;
+    uint64_t result = ((uint64_t)read32(err_reqaddrh_addr)) << 32;
     result += read32(err_reqaddr_addr);
 
     return result;
